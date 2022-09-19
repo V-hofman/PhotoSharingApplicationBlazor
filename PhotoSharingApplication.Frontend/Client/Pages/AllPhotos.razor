@@ -17,21 +17,27 @@ else
 {
     @foreach (var photo in photos)
     {
-        <article>
-            <MudCard>
+        <MudContainer MaxWidth=MaxWidth.Medium>
+            <MudCard Outlined="true" Style="width=80%">
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudAvatar Color="Color.Secondary">@photo.Id</MudAvatar>
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body1">@photo.Title</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
                 <MudCardMedia Image="@(photo.PhotoFile is null ? "" : $"data:{photo.ImageMimeType};base64,{Convert.ToBase64String(photo.PhotoFile)}")" Fluid=true; />
                 <MudCardContent>
-                    <MudText Typo="Typo.h5">@photo.Title</MudText>
-                    <MudText Typo="Typo.body2">@photo.Id</MudText>
                     <MudText Typo="Typo.body2">@photo.Description</MudText>
                 </MudCardContent>
                 <MudCardActions>
-                    <MudButton Href="@($"photos/details/{photo.Id}")">Details</MudButton>
-                    <MudButton Href="@($"photos/update/{photo.Id}")">Update</MudButton>
-                    <MudButton Href="@($"photos/delete/{photo.Id}")">Delete</MudButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.ZoomIn" Color="Color.Default" Href="@($"photos/details/{photo.Id}")" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" Href="@($"photos/update/{photo.Id}")" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Default" Href="@($"photos/delete/{photo.Id}")" />
                 </MudCardActions>
             </MudCard>
-        </article>
+        </MudContainer>
     }
 }
 

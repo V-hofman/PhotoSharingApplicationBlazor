@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-
+<MudThemeProvider IsDarkMode=true/>
 <MudLayout>
     <MudPaper fluid=true; MinHeight="100vh" MinWidth="100vw" Style="overflow:hidden; position:relative;">
         <MudDrawerContainer Class="mud-height-full">
@@ -13,15 +13,13 @@
             <MudMainContent>
                 <div>
                     <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@ToggleDrawer">Persistent drawer</MudButton>
+                    <p></p>
                     @Body
                 </div>
             </MudMainContent>
         </MudDrawerContainer>
     </MudPaper>
-
-
 </MudLayout>
-
 @code
 {
     bool open = false;
