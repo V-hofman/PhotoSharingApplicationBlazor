@@ -7,32 +7,24 @@
 
 <PageTitle>Update Photo @photo?.Title</PageTitle>
 
-@if (photo is null) {
-    <p>...Loading...</p>
-} else {
-    <EditForm Model="@photo" OnValidSubmit="HandleValidSubmit">
-        <p>
-            <label>
-                Title:
-                <InputText @bind-Value="photo.Title" />
-            </label>
-        </p>
-        <p>
-            <label>
-                Description (optional):
-                <InputTextArea @bind-Value="photo.Description" />
-            </label>
-        </p>
-        <p>
-            <label>
-                File:
-                <InputFile OnChange="HandleFileSelected" />
-            </label>
-        </p>
-        <p><img src="@(photo.PhotoFile is null ? "" : $"data:{photo.ImageMimeType};base64,{Convert.ToBase64String(photo.PhotoFile)}")" /></p>
-        <button type="submit">Submit</button>
-    </EditForm>
-}
+<PageTitle>Update Photo</PageTitle>
+<EditForm Model="@photo" OnValidSubmit="HandleValidSubmit">
+    <MudItem xs="12" sm="7">
+        <MudCard>
+            <MudText Typo="Typo.h3">Upload Photo</MudText>
+            <MudCardContent>
+                <MudTextField @bind-Value="photo.Title" Label="Title" FullWidth Variant="Variant.Outlined"></MudTextField>
+                <MudTextField @bind-Value="photo.Description" Label="Description (optional):" FullWidth Variant="Variant.Outlined"></MudTextField>
+                <InputFile id="fileInput112" OnChange="@UploadFiles" />
+                <MudCardMedia Wide="true" ImageUrl="@(photo.PhotoFile == null ? "" : $"data:{photo.ImageMimeType};base64,{Convert.ToBase64String(photo.PhotoFile)}")"></MudCardMedia>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</EditForm>
+
 
 @code {
     [Parameter]
@@ -40,21 +32,31 @@
 
     Photo? photo;
 
-    protected override async Task OnInitializedAsync() {
+    protected override async Task OnInitializedAsync()
+    {
         photo = await photosService.FindAsync(Id);
     }
 
-    private async Task HandleValidSubmit() {
-        await photosService.UpdateAsync(photo);
+    private async Task HandleValidSubmit()
+    {
+        await photosService.UpdateAsync(photo!);
         navigationManager.NavigateTo("/photos/all");
     }
 
-    private async Task HandleFileSelected(InputFileChangeEventArgs args) {
-        photo.ImageMimeType = args.File.ContentType;
+    private async Task UploadFiles(InputFileChangeEventArgs e)
+    {
+        var entries = e.GetMultipleFiles();
+        if (entries is null)
+        {
+            return;
+        }
+        photo!.ImageMimeType = e.File.ContentType;
 
-        using (var streamReader = new System.IO.MemoryStream()) {
-            await args.File.OpenReadStream().CopyToAsync(streamReader);
-            photo.PhotoFile = streamReader.ToArray();
+        using (var stream = new System.IO.MemoryStream())
+        {
+            var streamRead = e.File.OpenReadStream();
+            await streamRead.CopyToAsync(stream);
+            photo.PhotoFile = stream.ToArray();
         }
     }
 }
