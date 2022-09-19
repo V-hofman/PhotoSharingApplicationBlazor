@@ -6,16 +6,33 @@
 
 <PageTitle>Photo Details - @photo?.Title</PageTitle>
 
-@if (photo is null) {
+@if (photo is null)
+{
     <p>...Loading...</p>
-} else {
-    <article>
-        <p>@photo.Id</p>
-        <p>@photo.Title</p>
-        <p>@photo.Description</p>
-        <p>@photo.CreatedDate.ToShortDateString()</p>
-        <p><img src="@(photo.PhotoFile is null ? "" : $"data:{photo.ImageMimeType};base64,{Convert.ToBase64String(photo.PhotoFile)}")" /></p>
-    </article>
+}
+else
+{
+    <MudContainer MaxWidth=MaxWidth.Medium>
+        <MudCard Outlined="true" Style="width=80%">
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudAvatar Color="Color.Secondary">@photo.Id</MudAvatar>
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.body1">@photo.Title</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardMedia Image="@(photo.PhotoFile is null ? "" : $"data:{photo.ImageMimeType};base64,{Convert.ToBase64String(photo.PhotoFile)}")" Fluid=true; />
+            <MudCardContent>
+                <MudText Typo="Typo.body2">@photo.Description</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudIconButton Icon="@Icons.Material.Filled.ZoomIn" Color="Color.Default" Href="@($"photos/details/{photo.Id}")" />
+                <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" Href="@($"photos/update/{photo.Id}")" />
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Default" Href="@($"photos/delete/{photo.Id}")" />
+            </MudCardActions>
+        </MudCard>
+    </MudContainer>
 }
 
 @code {
@@ -24,7 +41,8 @@
 
     Photo? photo;
 
-    protected override async Task OnInitializedAsync() {
+    protected override async Task OnInitializedAsync()
+    {
         photo = await photosService.FindAsync(Id);
     }
 }
