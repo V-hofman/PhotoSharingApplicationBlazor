@@ -1,6 +1,6 @@
 ﻿@using MudBlazor
 
-<Router AppAssembly="@typeof(App).Assembly">
+<Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(MainLayout).Assembly }">
     <Found Context="routeData">
         <MudThemeProvider />
         <MudDialogProvider />

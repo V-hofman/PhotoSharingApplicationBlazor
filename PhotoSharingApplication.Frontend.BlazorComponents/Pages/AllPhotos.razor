@@ -1,0 +1,34 @@
+﻿@using PhotoSharingApplication.Shared.Entities
+@using PhotoSharingApplication.Shared.Interfaces
+@using PhotoSharingApplication.Frontend.BlazorComponents.Components
+@inject IPhotosService photosService
+
+@page "/photos/all"
+
+<PageTitle>All Photos</PageTitle>
+
+<MudText Typo="Typo.h3">All Photos</MudText>
+
+<MudButton Href="photos/upload" Variant="Variant.Text" Color="Color.Primary">Upload new photo</MudButton>
+@if (photos is null)
+{
+    <p>...Loading...</p>
+}
+else
+{
+    @foreach (var photo in photos)
+    {
+        <MudContainer MaxWidth=MaxWidth.Medium>
+            <PhotoDetailsComponent Photo="photo" Details Edit Delete></PhotoDetailsComponent>
+        </MudContainer>
+    }
+}
+
+@code {
+    List<Photo>? photos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        photos = await photosService.GetPhotosAsync();
+    }
+}

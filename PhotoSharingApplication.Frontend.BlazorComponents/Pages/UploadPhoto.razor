@@ -1,0 +1,41 @@
+﻿@using PhotoSharingApplication.Frontend.BlazorComponents.Components
+@using PhotoSharingApplication.Shared.Interfaces
+@using PhotoSharingApplication.Shared.Entities
+@inject IPhotosService photosService
+@inject NavigationManager navigationManager
+@page "/photos/upload"
+
+<PageTitle>Upload Photo</PageTitle>
+<EditForm Model="@photo">
+    <MudItem xs="12" sm="7">
+       <PhotoDetailsComponent Photo="photo" UploadConfirm OnUpload="HandleValidSubmit"></PhotoDetailsComponent>
+        <InputFile id="fileInput112" OnChange="@UploadFiles" />
+    </MudItem>
+</EditForm>
+
+@code {
+    Photo photo = new Photo();
+
+    private async Task HandleValidSubmit()
+    {
+        await photosService.UploadAsync(photo);
+        navigationManager.NavigateTo("/photos/all");
+    }
+
+    private async Task UploadFiles(InputFileChangeEventArgs e)
+    {
+        var entries = e.GetMultipleFiles();
+        if (entries is null)
+        {
+            return;
+        }
+        photo.ImageMimeType = e.File.ContentType;
+
+        using (var stream = new System.IO.MemoryStream())
+        {
+            var streamRead = e.File.OpenReadStream();
+            await streamRead.CopyToAsync(stream);
+            photo.PhotoFile = stream.ToArray();
+        }
+    }
+}

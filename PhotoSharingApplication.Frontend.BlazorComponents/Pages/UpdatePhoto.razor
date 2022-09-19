@@ -1,5 +1,6 @@
 ﻿@page "/photos/update/{id:int}"
 
+@using PhotoSharingApplication.Frontend.BlazorComponents.Components
 @using PhotoSharingApplication.Shared.Interfaces
 @using PhotoSharingApplication.Shared.Entities
 @inject IPhotosService photosService
@@ -8,20 +9,12 @@
 <PageTitle>Update Photo @photo?.Title</PageTitle>
 
 <PageTitle>Update Photo</PageTitle>
-<EditForm Model="@photo" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="@photo">
     <MudItem xs="12" sm="7">
-        <MudCard>
-            <MudText Typo="Typo.h3">Upload Photo</MudText>
-            <MudCardContent>
-                <MudTextField @bind-Value="photo.Title" Label="Title" FullWidth Variant="Variant.Outlined"></MudTextField>
-                <MudTextField @bind-Value="photo.Description" Label="Description (optional):" FullWidth Variant="Variant.Outlined"></MudTextField>
-                <InputFile id="fileInput112" OnChange="@UploadFiles" />
-                <MudCardMedia Wide="true" ImageUrl="@(photo.PhotoFile == null ? "" : $"data:{photo.ImageMimeType};base64,{Convert.ToBase64String(photo.PhotoFile)}")"></MudCardMedia>
-            </MudCardContent>
-            <MudCardActions>
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update</MudButton>
-            </MudCardActions>
-        </MudCard>
+        <PhotoDetailsComponent Photo="photo" EditConfirm Delete OnUpdate="HandleValidSubmit">
+
+        </PhotoDetailsComponent>
+        <InputFile id="fileInput112" OnChange="@UploadFiles" />
     </MudItem>
 </EditForm>
 

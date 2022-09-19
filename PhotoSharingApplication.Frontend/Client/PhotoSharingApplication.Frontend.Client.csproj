@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\PhotoSharingApplication.Frontend.BlazorComponents\PhotoSharingApplication.Frontend.BlazorComponents.csproj" />
     <ProjectReference Include="..\..\PhotoSharingApplication.Shared\PhotoSharingApplication.Shared.csproj" />
     <ProjectReference Include="..\Shared\PhotoSharingApplication.Frontend.Shared.csproj" />
   </ItemGroup>

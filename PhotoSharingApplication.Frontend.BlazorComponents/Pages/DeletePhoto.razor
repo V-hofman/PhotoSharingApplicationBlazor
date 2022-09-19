@@ -1,0 +1,39 @@
+﻿@using PhotoSharingApplication.Shared.Interfaces
+@using PhotoSharingApplication.Shared.Entities
+@using PhotoSharingApplication.Frontend.BlazorComponents.Components
+@inject IPhotosService photosService
+@inject NavigationManager navigationManager
+
+@page "/photos/delete/{id:int}"
+
+<PageTitle>Delete Photo- @photo?.Title</PageTitle>
+
+@if (photo is null)
+{
+    <p>...Loading...</p>
+}
+else
+{
+    <MudContainer MaxWidth=MaxWidth.Medium>
+        <PhotoDetailsComponent Photo="photo" DeleteConfirm OnDeleteConfirmed="Delete"></PhotoDetailsComponent>
+    </MudContainer>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+
+
+    Photo? photo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        photo = await photosService.FindAsync(Id);
+    }
+    private async Task Delete(int Id)
+    {
+        await photosService.RemoveAsync(Id);
+        navigationManager.NavigateTo("/photos/all");
+    }
+}
