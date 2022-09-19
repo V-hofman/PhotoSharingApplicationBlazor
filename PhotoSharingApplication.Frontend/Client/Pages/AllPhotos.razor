@@ -1,0 +1,45 @@
+﻿@using PhotoSharingApplication.Shared.Entities
+@using PhotoSharingApplication.Shared.Interfaces
+@inject IPhotosService photosService
+
+@page "/photos/all"
+
+<PageTitle>All Photos</PageTitle>
+
+<MudText Typo="Typo.h3">All Photos</MudText>
+
+<MudButton Href="photos/upload" Variant="Variant.Text" Color="Color.Primary">Upload new photo</MudButton>
+@if (photos is null)
+{
+    <p>...Loading...</p>
+}
+else
+{
+    @foreach (var photo in photos)
+    {
+        <article>
+            <MudCard>
+                <MudCardMedia Image="@(photo.PhotoFile is null ? "" : $"data:{photo.ImageMimeType};base64,{Convert.ToBase64String(photo.PhotoFile)}")" Fluid=true; />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">@photo.Title</MudText>
+                    <MudText Typo="Typo.body2">@photo.Id</MudText>
+                    <MudText Typo="Typo.body2">@photo.Description</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Href="@($"photos/details/{photo.Id}")">Details</MudButton>
+                    <MudButton Href="@($"photos/update/{photo.Id}")">Update</MudButton>
+                    <MudButton Href="@($"photos/delete/{photo.Id}")">Delete</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </article>
+    }
+}
+
+@code {
+    List<Photo>? photos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        photos = await photosService.GetPhotosAsync();
+    }
+}

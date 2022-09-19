@@ -1,0 +1,33 @@
+﻿@inherits LayoutComponentBase
+
+
+<MudLayout>
+    <MudPaper fluid=true; MinHeight="100vh" MinWidth="100vw" Style="overflow:hidden; position:relative;">
+        <MudDrawerContainer Class="mud-height-full">
+            <MudDrawer @bind-Open="@open" Elevation="0" Variant="@DrawerVariant.Persistent" Color="Color.Primary">
+                <MudDrawerHeader>
+                    <MudText Typo="Typo.h6">My App</MudText>
+                </MudDrawerHeader>
+                <NavMenu />
+            </MudDrawer>
+            <MudMainContent>
+                <div>
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@ToggleDrawer">Persistent drawer</MudButton>
+                    @Body
+                </div>
+            </MudMainContent>
+        </MudDrawerContainer>
+    </MudPaper>
+
+
+</MudLayout>
+
+@code
+{
+    bool open = false;
+
+    void ToggleDrawer()
+    {
+        open = !open;
+    }
+}
