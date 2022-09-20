@@ -11,10 +11,7 @@
 <PageTitle>Update Photo</PageTitle>
 <EditForm Model="@photo">
     <MudItem xs="12" sm="7">
-        <PhotoDetailsComponent Photo="photo" EditConfirm Delete OnUpdate="HandleValidSubmit">
-
-        </PhotoDetailsComponent>
-        <InputFile id="fileInput112" OnChange="@UploadFiles" />
+        <PhotoDetailsComponent Photo="photo" EditConfirm Delete OnUpdate="HandleValidSubmit" OnFileChange="UploadFiles"/>
     </MudItem>
 </EditForm>
 
@@ -36,18 +33,15 @@
         navigationManager.NavigateTo("/photos/all");
     }
 
-    private async Task UploadFiles(InputFileChangeEventArgs e)
+
+    private async Task UploadFiles(IBrowserFile e)
     {
-        var entries = e.GetMultipleFiles();
-        if (entries is null)
-        {
-            return;
-        }
-        photo!.ImageMimeType = e.File.ContentType;
+
+        photo!.ImageMimeType = e.ContentType;
 
         using (var stream = new System.IO.MemoryStream())
         {
-            var streamRead = e.File.OpenReadStream();
+            var streamRead = e.OpenReadStream();
             await streamRead.CopyToAsync(stream);
             photo.PhotoFile = stream.ToArray();
         }

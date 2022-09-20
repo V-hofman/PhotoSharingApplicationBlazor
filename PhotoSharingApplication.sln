@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoSharingApplication.Fro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoSharingApplication.Shared", "PhotoSharingApplication.Shared\PhotoSharingApplication.Shared.csproj", "{2F499F6E-C368-4D58-A55A-14EC92ED6D1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoSharingApplication.Frontend.BlazorComponents", "PhotoSharingApplication.Frontend.BlazorComponents\PhotoSharingApplication.Frontend.BlazorComponents.csproj", "{DCEA5A82-9FA3-45C1-BA7C-FDD6AFB81473}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoSharingApplication.Frontend.BlazorComponents", "PhotoSharingApplication.Frontend.BlazorComponents\PhotoSharingApplication.Frontend.BlazorComponents.csproj", "{DCEA5A82-9FA3-45C1-BA7C-FDD6AFB81473}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoSharingApplication.WebServices.REST.Photos", "PhotoSharingApplication.WebServices.REST.Photos\PhotoSharingApplication.WebServices.REST.Photos.csproj", "{E64516E3-D752-4725-B925-D03114FD7DAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{DCEA5A82-9FA3-45C1-BA7C-FDD6AFB81473}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCEA5A82-9FA3-45C1-BA7C-FDD6AFB81473}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCEA5A82-9FA3-45C1-BA7C-FDD6AFB81473}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E64516E3-D752-4725-B925-D03114FD7DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E64516E3-D752-4725-B925-D03114FD7DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E64516E3-D752-4725-B925-D03114FD7DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E64516E3-D752-4725-B925-D03114FD7DAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

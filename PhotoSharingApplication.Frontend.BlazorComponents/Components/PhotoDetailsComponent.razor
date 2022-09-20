@@ -8,37 +8,38 @@
             <MudText Typo="Typo.body1">@Photo!.Title</MudText>
         </CardHeaderContent>
     </MudCardHeader>
-    <MudCardMedia Image="@(Photo!.PhotoFile is null ? "" : $"data:{Photo.ImageMimeType};base64,{Convert.ToBase64String(Photo.PhotoFile)}")" Fluid=true; />
+    <PhotoPictureComponent Photo="Photo"></PhotoPictureComponent>
     <MudCardContent>
-        <MudText Typo="Typo.body2">@Photo.Description</MudText>
+        <MudText Typo="Typo.body2">@Photo!.Description</MudText>
     </MudCardContent>
     <MudCardActions>
         @if (Details)
         {
-            <MudIconButton Icon="@Icons.Material.Filled.ZoomIn" Color="Color.Default" Href="@($"photos/details/{Photo.Id}")" />
+            <MudIconButton Icon="@Icons.Material.Filled.ZoomIn" Color="Color.Default" Href="@($"photos/details/{Photo!.Id}")" />
         }
         @if (Edit)
         {
-            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" Href="@($"photos/update/{Photo.Id}")" />
+            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" Href="@($"photos/update/{Photo!.Id}")" />
         }
         @if (Delete)
         {
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Default" Href="@($"photos/delete/{Photo.Id}")" />
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Default" Href="@($"photos/delete/{Photo!.Id}")" />
         }
         @if (DeleteConfirm)
         {
-            <MudIconButton Icon="@Icons.Material.Filled.DeleteForever" Color="Color.Default" OnClick="@(async()=> await OnDeleteConfirmed.InvokeAsync(Photo.Id))" />
+            <MudIconButton Icon="@Icons.Material.Filled.DeleteForever" Color="Color.Default" OnClick="@(async()=> await OnDeleteConfirmed.InvokeAsync(Photo!.Id))" />
         }      
         @if(EditConfirm || UploadConfirm)
         {
-            <MudTextField @bind-Value="Photo.Title" Label="Title" FullWidth Variant="Variant.Outlined"></MudTextField>
-            <MudTextField @bind-Value="Photo.Description" Label="Description (optional):" FullWidth Variant="Variant.Outlined"></MudTextField>
-            
+            <MudTextField @bind-Value="Photo!.Title" Label="Title" FullWidth Variant="Variant.Outlined"></MudTextField>
+            <MudTextField @bind-Value="Photo!.Description" Label="Description (optional):" FullWidth Variant="Variant.Outlined"></MudTextField>
+            <p>
+            <InputFile OnChange="ProvideFile" />
+            </p>
         }
         @if (EditConfirm)
         {
-            <MudTextField @bind-Value="Photo.Title" Label="Title" FullWidth Variant="Variant.Outlined"></MudTextField>
-            <MudTextField @bind-Value="Photo.Description" Label="Description (optional):" FullWidth Variant="Variant.Outlined"></MudTextField>
+
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" OnClick="@(async()=> await OnUpdate.InvokeAsync())" Color="Color.Primary" Class="ml-auto">Update</MudButton>
         }       
         @if (UploadConfirm)
@@ -83,7 +84,16 @@
     public EventCallback OnUpload { get; set; }   
 
     [Parameter]
-    public EventCallback<int> OnFileChange { get; set; }    
+    public EventCallback<IBrowserFile> OnFileChange { get; set; }    
 
+    private async Task ProvideFile(InputFileChangeEventArgs e)
+    {
+        var entries = e.File;
+        if (entries is null)
+        {
+            return;
+        }
+        await OnFileChange.InvokeAsync(entries);
+    }
 
 }
