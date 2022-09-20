@@ -8,12 +8,13 @@
 
 <PageTitle>Update Photo @photo?.Title</PageTitle>
 
-<PageTitle>Update Photo</PageTitle>
-<EditForm Model="@photo">
-    <MudItem xs="12" sm="7">
-        <PhotoDetailsComponent Photo="photo" EditConfirm Delete OnUpdate="HandleValidSubmit" OnFileChange="UploadFiles"/>
-    </MudItem>
-</EditForm>
+
+
+    <EditForm Model="@photo">
+        <MudItem xs="12" sm="12">
+            <PhotoDetailsComponent Photo="photo" EditConfirm Delete OnUpdate="HandleValidSubmit" OnFileChange="UploadFiles"/>
+        </MudItem>
+    </EditForm>
 
 
 @code {

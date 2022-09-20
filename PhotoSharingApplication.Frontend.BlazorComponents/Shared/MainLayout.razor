@@ -1,25 +1,38 @@
 ﻿@inherits LayoutComponentBase
 
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
 <MudThemeProvider IsDarkMode=true/>
+
 <MudLayout>
-    <MudPaper fluid=true; MinHeight="100vh" MinWidth="100vw" Style="overflow:hidden; position:relative;">
+    <MudPaper MinHeight="100vh" MinWidth="100vw">
+        <MudAppBar Dense="true">
+
+            <MudText Typo="Typo.h6">Blazor be blazing</MudText>
+            
+        </MudAppBar>
         <MudDrawerContainer Class="mud-height-full">
-            <MudDrawer @bind-Open="@open" Elevation="0" Variant="@DrawerVariant.Persistent" Color="Color.Primary">
+            <MudDrawer @bind-Open="@open" Elevation="1" Variant="@DrawerVariant.Mini" Fixed="false" OpenMiniOnHover="true" >
                 <MudDrawerHeader>
-                    <MudText Typo="Typo.h6">My App</MudText>
+
                 </MudDrawerHeader>
-                <NavMenu />
+                <MudDrawerContainer>
+                    <MudNavMenu Bordered="true" Color="Color.Success">
+                         <NavMenu/>
+                    </MudNavMenu>                                 
+                </MudDrawerContainer>
             </MudDrawer>
-            <MudMainContent>
-                <div>
-                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@ToggleDrawer">Persistent drawer</MudButton>
-                    <p></p>
+            <MudMainContent align-center>
+                <MudContainer MaxWidth=MaxWidth.Medium >
                     @Body
-                </div>
+                </MudContainer>
             </MudMainContent>
         </MudDrawerContainer>
     </MudPaper>
 </MudLayout>
+
 @code
 {
     bool open = false;
@@ -29,3 +42,4 @@
         open = !open;
     }
 }
+

@@ -1,6 +1,4 @@
-﻿<MudPaper flex=true; Elevation="0" Class="py-3">
-    <MudNavMenu Color="Color.Info">
-        <MudNavLink Href="/photos/all">All Photos</MudNavLink>
-        <MudNavLink Href="/photos/upload">Upload Photo</MudNavLink>
-    </MudNavMenu>
-</MudPaper>
+﻿@using Microsoft.AspNetCore.Components.Routing
+
+<MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.List" Href="/photos/all"><MudText Style="margin-left:4px;">Display</MudText>  </MudNavLink>
+<MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Upload" Href="/photos/upload"><MudText Style="margin-left:4px;">Upload</MudText> </MudNavLink>

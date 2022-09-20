@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using PhotoSharingApplication.WebServices.REST.Photos.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<PhotosDbContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("PhotosDbContext")));
 
 var app = builder.Build();
 

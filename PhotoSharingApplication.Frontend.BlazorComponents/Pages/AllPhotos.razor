@@ -7,22 +7,23 @@
 
 <PageTitle>All Photos</PageTitle>
 
-<MudText Typo="Typo.h3">All Photos</MudText>
 
-<MudButton Href="photos/upload" Variant="Variant.Text" Color="Color.Primary">Upload new photo</MudButton>
-@if (photos is null)
-{
-    <p>...Loading...</p>
-}
-else
-{
-    @foreach (var photo in photos)
+    <MudText Typo="Typo.h3">All Photos</MudText>
+
+    <MudButton Href="photos/upload" Variant="Variant.Text" Color="Color.Primary">Upload new photo</MudButton>
+    @if (photos is null)
     {
-        <MudContainer MaxWidth=MaxWidth.Medium>
-            <PhotoDetailsComponent Photo="photo" Details Edit Delete></PhotoDetailsComponent>
-        </MudContainer>
+        <p>...Loading...</p>
     }
-}
+    else
+    {
+        @foreach (var photo in photos)
+        {
+
+                <PhotoDetailsComponent Photo="photo" Details Edit Delete></PhotoDetailsComponent>
+   
+        }
+    }
 
 @code {
     List<Photo>? photos;

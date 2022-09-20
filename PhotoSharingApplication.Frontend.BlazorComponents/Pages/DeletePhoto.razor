@@ -6,19 +6,19 @@
 
 @page "/photos/delete/{id:int}"
 
-<PageTitle>Delete Photo- @photo?.Title</PageTitle>
 
-@if (photo is null)
-{
-    <p>...Loading...</p>
-}
-else
-{
-    <MudContainer MaxWidth=MaxWidth.Medium>
+    <PageTitle>Delete Photo- @photo?.Title</PageTitle>
+
+    @if (photo is null)
+    {
+        <p>...Loading...</p>
+    }
+    else
+    {
         <PhotoDetailsComponent Photo="photo" DeleteConfirm OnDeleteConfirmed="Delete"></PhotoDetailsComponent>
-    </MudContainer>
-}
+    }
 
+    
 @code {
     [Parameter]
     public int Id { get; set; }

@@ -1,17 +1,28 @@
 ﻿
-<MudCard Outlined="true" Style="width=80%">
+<MudCard Outlined="true" Style="min-width:10%; max-width:80%; margin-top:5%; border:solid 4px; border-radius:1%;">
     <MudCardHeader>
         <CardHeaderAvatar>
-            <MudAvatar Color="Color.Secondary">@Photo.Id</MudAvatar>
+            <MudAvatar Color="Color.Dark">@Photo!.Id</MudAvatar>
         </CardHeaderAvatar>
         <CardHeaderContent>
             <MudText Typo="Typo.body1">@Photo!.Title</MudText>
+                            <MudFab HtmlTag="label"
+                Color="Color.Success"
+                Icon="@Icons.Filled.AttachFile"
+                for="fileInput" />
         </CardHeaderContent>
     </MudCardHeader>
-    <PhotoPictureComponent Photo="Photo"></PhotoPictureComponent>
+   
     <MudCardContent>
+        <MudContainer Style="max-width:50%; max-height:50%;">
+            <PhotoPictureComponent Photo="Photo"></PhotoPictureComponent>
+            <MudDivider DividerType="DividerType.FullWidth"/>
+        </MudContainer>   
+        <MudContainer>
         <MudText Typo="Typo.body2">@Photo!.Description</MudText>
+        </MudContainer>
     </MudCardContent>
+
     <MudCardActions>
         @if (Details)
         {
@@ -29,27 +40,28 @@
         {
             <MudIconButton Icon="@Icons.Material.Filled.DeleteForever" Color="Color.Default" OnClick="@(async()=> await OnDeleteConfirmed.InvokeAsync(Photo!.Id))" />
         }      
+
         @if(EditConfirm || UploadConfirm)
         {
-            <MudTextField @bind-Value="Photo!.Title" Label="Title" FullWidth Variant="Variant.Outlined"></MudTextField>
-            <MudTextField @bind-Value="Photo!.Description" Label="Description (optional):" FullWidth Variant="Variant.Outlined"></MudTextField>
-            <p>
-            <InputFile OnChange="ProvideFile" />
-            </p>
+            <MudContainer>
+            <MudTextField @bind-Value="Photo!.Title" Label="Title" FullWidth Variant="Variant.Filled"></MudTextField>
+            <MudTextField @bind-Value="Photo!.Description" Label="Description" FullWidth Variant="Variant.Filled"></MudTextField>
+            </MudContainer>
+            <InputFile id="fileInput" OnChange="ProvideFile" hidden/>
+ 
+
         }
+        <MudContainer>
         @if (EditConfirm)
         {
-
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" OnClick="@(async()=> await OnUpdate.InvokeAsync())" Color="Color.Primary" Class="ml-auto">Update</MudButton>
+            
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" OnClick="@(async()=> await OnUpdate.InvokeAsync())" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
         }       
         @if (UploadConfirm)
         {
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" OnClick="@(async()=> await OnUpload.InvokeAsync())" Color="Color.Primary" Class="ml-auto">Upload</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" OnClick="@(async()=> await OnUpload.InvokeAsync())" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
         }
-
-
-
-
+        </MudContainer>
     </MudCardActions>
 </MudCard>
 @code {
