@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 var app = builder.Build();
 
@@ -27,7 +29,7 @@ app.UseRouting();
 
 
 app.MapRazorPages();
-app.MapControllers();
+app.MapReverseProxy();
 app.MapFallbackToFile("index.html");
 
 app.Run();

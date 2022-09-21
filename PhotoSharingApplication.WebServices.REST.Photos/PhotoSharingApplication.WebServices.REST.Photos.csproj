@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PhotoSharingApplication.Frontend\Client\PhotoSharingApplication.Frontend.Client.csproj" />
     <ProjectReference Include="..\PhotoSharingApplication.Shared\PhotoSharingApplication.Shared.csproj" />
   </ItemGroup>
 
